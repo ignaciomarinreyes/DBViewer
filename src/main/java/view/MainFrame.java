@@ -6,16 +6,18 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
-import model.RestDBLoader;
+import model.Table;
+import persistence.DBLoader;
 
 public class MainFrame extends javax.swing.JFrame {
 
-    DefaultListModel model = new DefaultListModel(); //todo
-    ArrayList<String> list = new ArrayList<>(); // todo
-    RestDBLoader db;
+    private ArrayList<Table> tables;
+    private boolean logged; //Revisar
 
+    
     // Hacer una clase Table que contenga el nombre de la tabla (String), y los campos (Array de Strings de Tamaño variable)
     // De esta forma cada objeto Table al ser seleccionado podemos acceder a sus campos facilmente
+    
     // Hacer el modelo de la lista con una Matriz de Strings, es plan:
     /*  TABLA CAMPO CAMPO CAMPO
         TABLA CAMPO CAMPO
@@ -25,9 +27,25 @@ public class MainFrame extends javax.swing.JFrame {
     // Hacer una clase para cada tabla seria algo muy exagerado
     public MainFrame() {
         initComponents();
-        db = new RestDBLoader();
-        jList.setModel(model);
-        setLookAndFeel();
+        setLookAndFeel();       
+    }
+
+    public MainFrame(LoginJFrame loginFrame) {
+        this();
+        logged = loginFrame.isLogged();
+        tables = loginFrame.getTables();
+        
+        if (logged) {
+            loadTables();
+        }
+    }
+    
+    public void setLogged(boolean logged) {
+        this.logged = logged;
+    }
+        
+    public void setTables(ArrayList<Table> tables) {
+        this.tables = tables;
     }
 
     @SuppressWarnings("unchecked")
@@ -35,99 +53,72 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane = new javax.swing.JScrollPane();
-        jList = new javax.swing.JList<>();
-        passwordJPasswordField = new javax.swing.JPasswordField();
-        userNameJTextField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        tablesJList = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        FileJMenu = new javax.swing.JMenu();
+        ConnectJMenuItem = new javax.swing.JMenuItem();
+        ExitJMenuItem = new javax.swing.JMenuItem();
+        HelpJMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane.setViewportView(jList);
+        jScrollPane.setViewportView(tablesJList);
 
-        passwordJPasswordField.setText("DIU-aed56-noi");
+        jScrollPane1.setViewportView(jList1);
 
-        userNameJTextField.setText("estudiante-DIU");
+        FileJMenu.setMnemonic('f');
+        FileJMenu.setText("File");
 
-        jLabel1.setText("Name");
-
-        jLabel2.setText("Pass");
-
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ConnectJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        ConnectJMenuItem.setText("Connect");
+        ConnectJMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ConnectJMenuItemActionPerformed(evt);
             }
         });
+        FileJMenu.add(ConnectJMenuItem);
+
+        ExitJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        ExitJMenuItem.setText("Exit");
+        FileJMenu.add(ExitJMenuItem);
+
+        jMenuBar1.add(FileJMenu);
+
+        HelpJMenu.setMnemonic('h');
+        HelpJMenu.setText("Help");
+        jMenuBar1.add(HelpJMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(passwordJPasswordField)
-                            .addComponent(userNameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(123, 123, 123)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92))
+                .addGap(122, 122, 122)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(userNameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(passwordJPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int n = 0;
-        String user = userNameJTextField.getText();
-        char[] password = passwordJPasswordField.getPassword();
-        try {
-            list = db.read(user, password);
-            for (String table : list) {
-                model.addElement(table);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "Incorrect user or password");
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //to-do mensaje de error
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void ConnectJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectJMenuItemActionPerformed
+        new LoginJFrame(this).setVisible(true);
+    }//GEN-LAST:event_ConnectJMenuItemActionPerformed
 
     private void setLookAndFeel() {
         /* Set the Nimbus look and feel */
@@ -154,12 +145,22 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList;
+    private javax.swing.JMenuItem ConnectJMenuItem;
+    private javax.swing.JMenuItem ExitJMenuItem;
+    private javax.swing.JMenu FileJMenu;
+    private javax.swing.JMenu HelpJMenu;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane;
-    private javax.swing.JPasswordField passwordJPasswordField;
-    private javax.swing.JTextField userNameJTextField;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> tablesJList;
     // End of variables declaration//GEN-END:variables
+
+    public void loadTables() {
+        DefaultListModel model = new DefaultListModel(); //todo
+        for (Table table : tables) {
+            model.addElement(table.getName());
+        }
+        tablesJList.setModel(model);
+    }
 }
