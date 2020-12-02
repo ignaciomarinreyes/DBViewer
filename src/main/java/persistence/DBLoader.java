@@ -6,10 +6,8 @@ import java.util.logging.*;
 import model.Table;
 
 public class DBLoader {
-    private Connection con;
-    public DBLoader() {
 
-    }
+    private Connection con;
 
     public DatabaseMetaData connect(String user, char[] pass) {
         DatabaseMetaData md = null;
@@ -27,11 +25,6 @@ public class DBLoader {
         } catch (SQLException ex) {
             Logger.getLogger(DBLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*
-                "jdbc:mysql://mozart.dis.ulpgc.es/DIU_BD?useSSL=true",
-                "estudiante-DIU",
-                "DIU-aed56-noi");
-         */
         return md;
     }
 
@@ -55,7 +48,8 @@ public class DBLoader {
         }
         return tables;
     }
-    public void disconnect(){
+
+    public void disconnect() {
         try {
             con.close();
         } catch (SQLException ex) {

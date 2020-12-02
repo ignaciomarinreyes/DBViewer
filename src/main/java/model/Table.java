@@ -6,12 +6,13 @@ public class Table {
 
     private String name;
     private ArrayList<String> fields;
-    
+
     public Table(String name) {
         this.name = name;
         this.fields = new ArrayList<>();
     }
-    public void addField(String field){
+
+    public void addField(String field) {
         fields.add(field);
     }
 
@@ -22,5 +23,5 @@ public class Table {
     public String getName() {
         return name;
     }
-    
+
 }

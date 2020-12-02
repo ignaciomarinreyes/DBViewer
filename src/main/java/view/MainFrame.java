@@ -8,33 +8,26 @@ import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import model.Table;
 import persistence.DBLoader;
+import javax.swing.ListSelectionModel;
 
 public class MainFrame extends javax.swing.JFrame {
 
     private ArrayList<Table> tables;
-    private boolean logged; //Revisar
+    private boolean logged;
 
-    
-    // Hacer una clase Table que contenga el nombre de la tabla (String), y los campos (Array de Strings de Tamaño variable)
-    // De esta forma cada objeto Table al ser seleccionado podemos acceder a sus campos facilmente
-    
-    // Hacer el modelo de la lista con una Matriz de Strings, es plan:
-    /*  TABLA CAMPO CAMPO CAMPO
-        TABLA CAMPO CAMPO
-        TABLA CAMPO CAMPO CAMPO CAMPO CAMPO
-        TABLA CAMPO CAMPO
-     */
-    // Hacer una clase para cada tabla seria algo muy exagerado
     public MainFrame() {
         initComponents();
+        setResizable(false);
+        setLocationRelativeTo(null);
+        simpleSelectionjToggleButton.setSelected(true);
+        tablesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setLookAndFeel();       
     }
 
     public MainFrame(LoginJFrame loginFrame) {
         this();
         logged = loginFrame.isLogged();
-        tables = loginFrame.getTables();
-        
+        tables = loginFrame.getTables();       
         if (logged) {
             loadTables();
         }
@@ -52,80 +45,204 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane = new javax.swing.JScrollPane();
+        selectionButtonGroup = new javax.swing.ButtonGroup();
+        jScrollPaneTableJList = new javax.swing.JScrollPane();
         tablesJList = new javax.swing.JList<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        FileJMenu = new javax.swing.JMenu();
-        ConnectJMenuItem = new javax.swing.JMenuItem();
-        ExitJMenuItem = new javax.swing.JMenuItem();
-        HelpJMenu = new javax.swing.JMenu();
+        jScrollPaneFieldsList = new javax.swing.JScrollPane();
+        fieldsjList = new javax.swing.JList<>();
+        jPanel1 = new javax.swing.JPanel();
+        simpleSelectionjToggleButton = new javax.swing.JToggleButton();
+        intervalSelectionjToggleButton = new javax.swing.JToggleButton();
+        multipleSelectionjToggleButton = new javax.swing.JToggleButton();
+        cleanSelectionjButton = new javax.swing.JButton();
+        jMenuBar = new javax.swing.JMenuBar();
+        fileJMenu = new javax.swing.JMenu();
+        connectJMenuItem = new javax.swing.JMenuItem();
+        exitJMenuItem = new javax.swing.JMenuItem();
+        helpJMenu = new javax.swing.JMenu();
+        aboutJMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane.setViewportView(tablesJList);
-
-        jScrollPane1.setViewportView(jList1);
-
-        FileJMenu.setMnemonic('f');
-        FileJMenu.setText("File");
-
-        ConnectJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        ConnectJMenuItem.setText("Connect");
-        ConnectJMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConnectJMenuItemActionPerformed(evt);
+        tablesJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                tablesJListValueChanged(evt);
             }
         });
-        FileJMenu.add(ConnectJMenuItem);
+        jScrollPaneTableJList.setViewportView(tablesJList);
 
-        ExitJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        ExitJMenuItem.setText("Exit");
-        FileJMenu.add(ExitJMenuItem);
+        jScrollPaneFieldsList.setViewportView(fieldsjList);
 
-        jMenuBar1.add(FileJMenu);
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Selection", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 14))); // NOI18N
 
-        HelpJMenu.setMnemonic('h');
-        HelpJMenu.setText("Help");
-        jMenuBar1.add(HelpJMenu);
+        selectionButtonGroup.add(simpleSelectionjToggleButton);
+        simpleSelectionjToggleButton.setText("Simple");
+        simpleSelectionjToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                simpleSelectionjToggleButtonActionPerformed(evt);
+            }
+        });
 
-        setJMenuBar(jMenuBar1);
+        selectionButtonGroup.add(intervalSelectionjToggleButton);
+        intervalSelectionjToggleButton.setText("Interval");
+        intervalSelectionjToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intervalSelectionjToggleButtonActionPerformed(evt);
+            }
+        });
+
+        selectionButtonGroup.add(multipleSelectionjToggleButton);
+        multipleSelectionjToggleButton.setText("Multiple Interval");
+        multipleSelectionjToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multipleSelectionjToggleButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(multipleSelectionjToggleButton)
+                .addGap(0, 12, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(simpleSelectionjToggleButton)
+                    .addComponent(intervalSelectionjToggleButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(simpleSelectionjToggleButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(intervalSelectionjToggleButton)
+                .addGap(12, 12, 12)
+                .addComponent(multipleSelectionjToggleButton)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        cleanSelectionjButton.setText("Clean");
+        cleanSelectionjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cleanSelectionjButtonActionPerformed(evt);
+            }
+        });
+
+        fileJMenu.setMnemonic('f');
+        fileJMenu.setText("File");
+
+        connectJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        connectJMenuItem.setText("Connect");
+        connectJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectJMenuItemActionPerformed(evt);
+            }
+        });
+        fileJMenu.add(connectJMenuItem);
+
+        exitJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        exitJMenuItem.setText("Exit");
+        exitJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitJMenuItemActionPerformed(evt);
+            }
+        });
+        fileJMenu.add(exitJMenuItem);
+
+        jMenuBar.add(fileJMenu);
+
+        helpJMenu.setMnemonic('h');
+        helpJMenu.setText("Help");
+
+        aboutJMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        aboutJMenuItem.setText("About");
+        aboutJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutJMenuItemActionPerformed(evt);
+            }
+        });
+        helpJMenu.add(aboutJMenuItem);
+
+        jMenuBar.add(helpJMenu);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPaneTableJList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cleanSelectionjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPaneFieldsList, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneTableJList, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cleanSelectionjButton))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jScrollPaneFieldsList, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConnectJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectJMenuItemActionPerformed
+    private void connectJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectJMenuItemActionPerformed
         new LoginJFrame(this).setVisible(true);
-    }//GEN-LAST:event_ConnectJMenuItemActionPerformed
+    }//GEN-LAST:event_connectJMenuItemActionPerformed
+
+    private void exitJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitJMenuItemActionPerformed
+        int res = JOptionPane.showConfirmDialog(rootPane, "Are you sure you wanna exit?", "Exit", JOptionPane.YES_OPTION);
+        if (res == 0) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_exitJMenuItemActionPerformed
+
+    private void tablesJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tablesJListValueChanged
+        loadFieldsSelectedTables(tablesJList.getSelectedIndices());    
+    }//GEN-LAST:event_tablesJListValueChanged
+
+    private void simpleSelectionjToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpleSelectionjToggleButtonActionPerformed
+        tablesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }//GEN-LAST:event_simpleSelectionjToggleButtonActionPerformed
+
+    private void intervalSelectionjToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intervalSelectionjToggleButtonActionPerformed
+        tablesJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    }//GEN-LAST:event_intervalSelectionjToggleButtonActionPerformed
+
+    private void multipleSelectionjToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multipleSelectionjToggleButtonActionPerformed
+        tablesJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }//GEN-LAST:event_multipleSelectionjToggleButtonActionPerformed
+
+    private void cleanSelectionjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanSelectionjButtonActionPerformed
+        tablesJList.clearSelection();
+    }//GEN-LAST:event_cleanSelectionjButtonActionPerformed
+
+    private void aboutJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutJMenuItemActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "DBViewer is based on Swing from the Java Library."
+                + "\nThe program shows all fields of selected database tables. "
+                + "\nVersion 1.0 - GitHub information: https://github.com/jesuslarez/DBViewer");
+    }//GEN-LAST:event_aboutJMenuItemActionPerformed
 
     private void setLookAndFeel() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -145,22 +262,41 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ConnectJMenuItem;
-    private javax.swing.JMenuItem ExitJMenuItem;
-    private javax.swing.JMenu FileJMenu;
-    private javax.swing.JMenu HelpJMenu;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem aboutJMenuItem;
+    private javax.swing.JButton cleanSelectionjButton;
+    private javax.swing.JMenuItem connectJMenuItem;
+    private javax.swing.JMenuItem exitJMenuItem;
+    private javax.swing.JList<String> fieldsjList;
+    private javax.swing.JMenu fileJMenu;
+    private javax.swing.JMenu helpJMenu;
+    private javax.swing.JToggleButton intervalSelectionjToggleButton;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPaneFieldsList;
+    private javax.swing.JScrollPane jScrollPaneTableJList;
+    private javax.swing.JToggleButton multipleSelectionjToggleButton;
+    private javax.swing.ButtonGroup selectionButtonGroup;
+    private javax.swing.JToggleButton simpleSelectionjToggleButton;
     private javax.swing.JList<String> tablesJList;
     // End of variables declaration//GEN-END:variables
 
     public void loadTables() {
-        DefaultListModel model = new DefaultListModel(); //todo
+        DefaultListModel model = new DefaultListModel(); 
         for (Table table : tables) {
             model.addElement(table.getName());
         }
         tablesJList.setModel(model);
+    }
+    
+    public void loadFieldsSelectedTables(int[] indexSelectedTables) {
+        DefaultListModel model = new DefaultListModel();
+        Table selectedTable = null;
+        for (int index : indexSelectedTables) {
+            selectedTable = tables.get(index);
+            for(String fieldSelectedTable : selectedTable.getFields()){
+                model.addElement(selectedTable.getName() + "." + fieldSelectedTable);
+            }
+        }
+        fieldsjList.setModel(model);
     }
 }
