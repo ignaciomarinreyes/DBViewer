@@ -30,6 +30,7 @@ public class LoginJFrame extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setTitle("DB Viewer - By Ignacio Marín & Jesús Lárez");
     }
 
     @SuppressWarnings("unchecked")

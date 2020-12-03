@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         simpleSelectionjToggleButton.setSelected(true);
         tablesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.setTitle("DB Viewer - By Ignacio Marín & Jesús Lárez");
     }
 
     public MainFrame(LoginJFrame loginFrame) {
