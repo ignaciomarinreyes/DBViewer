@@ -1,13 +1,10 @@
 package view;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import model.Table;
-import persistence.DBLoader;
 import javax.swing.ListSelectionModel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -16,27 +13,28 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean logged;
 
     public MainFrame() {
+        setLookAndFeel();
         initComponents();
+        setBackground(new Color(240, 240, 240));
         setResizable(false);
         setLocationRelativeTo(null);
         simpleSelectionjToggleButton.setSelected(true);
         tablesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        setLookAndFeel();       
     }
 
     public MainFrame(LoginJFrame loginFrame) {
         this();
         logged = loginFrame.isLogged();
-        tables = loginFrame.getTables();       
+        tables = loginFrame.getTables();
         if (logged) {
             loadTables();
         }
     }
-    
+
     public void setLogged(boolean logged) {
         this.logged = logged;
     }
-        
+
     public void setTables(ArrayList<Table> tables) {
         this.tables = tables;
     }
@@ -74,6 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPaneFieldsList.setViewportView(fieldsjList);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Selection", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 14))); // NOI18N
+        jPanel1.setForeground(new java.awt.Color(240, 240, 240));
 
         selectionButtonGroup.add(simpleSelectionjToggleButton);
         simpleSelectionjToggleButton.setText("Simple");
@@ -104,25 +103,25 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(multipleSelectionjToggleButton)
-                .addGap(0, 12, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(simpleSelectionjToggleButton)
-                    .addComponent(intervalSelectionjToggleButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(simpleSelectionjToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(intervalSelectionjToggleButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(multipleSelectionjToggleButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(simpleSelectionjToggleButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(intervalSelectionjToggleButton)
-                .addGap(12, 12, 12)
+                .addGap(6, 6, 6)
                 .addComponent(multipleSelectionjToggleButton)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         cleanSelectionjButton.setText("Clean");
@@ -181,25 +180,25 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPaneTableJList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cleanSelectionjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cleanSelectionjButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneFieldsList, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jScrollPaneFieldsList, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneTableJList, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cleanSelectionjButton))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(jScrollPaneFieldsList, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneTableJList, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cleanSelectionjButton))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneFieldsList))
+                .addContainerGap())
         );
 
         pack();
@@ -217,7 +216,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitJMenuItemActionPerformed
 
     private void tablesJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tablesJListValueChanged
-        loadFieldsSelectedTables(tablesJList.getSelectedIndices());    
+        loadFieldsSelectedTables(tablesJList.getSelectedIndices());
     }//GEN-LAST:event_tablesJListValueChanged
 
     private void simpleSelectionjToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpleSelectionjToggleButtonActionPerformed
@@ -245,7 +244,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void setLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -281,19 +280,19 @@ public class MainFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void loadTables() {
-        DefaultListModel model = new DefaultListModel(); 
+        DefaultListModel model = new DefaultListModel();
         for (Table table : tables) {
             model.addElement(table.getName());
         }
         tablesJList.setModel(model);
     }
-    
+
     public void loadFieldsSelectedTables(int[] indexSelectedTables) {
         DefaultListModel model = new DefaultListModel();
         Table selectedTable = null;
         for (int index : indexSelectedTables) {
             selectedTable = tables.get(index);
-            for(String fieldSelectedTable : selectedTable.getFields()){
+            for (String fieldSelectedTable : selectedTable.getFields()) {
                 model.addElement(selectedTable.getName() + "." + fieldSelectedTable);
             }
         }
